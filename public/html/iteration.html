@@ -1,0 +1,19 @@
+<script>
+	// Iteration 반복
+	// JS의 iteration: 배열, 객체
+
+	// var arr = ['A', 'B', 'C'];
+	var arr = { a: 'A', b: 'B', c: 'C' }; // <- 객체로 바꾼것.
+	for(var i=0; i<arr.length; i++) { //렝스없으면 안도는 포문
+		console.log(arr[i]);
+	}
+	for(var i in arr) {	// **객체도 반복한다.** 자바스크립트에서 객체도 도는애.
+		console.log(arr[i]); //arr을 순회하면서 인덱스값을 준다. arr의 [i]값 
+	}
+	for(var v of arr) {	// ES6
+		console.log(v); //value 값 자체를 준다. 인덱스값 ㄴㄴ 
+	}
+	arr.forEach(function(v, i){ //콜백, 밸류도 주고 인덱스도 준다. 
+		console.log(v);  //둘중 하나 써먹으면 된다. 
+	});
+</script>

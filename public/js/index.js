@@ -3,7 +3,8 @@ var auth = firebase.auth();
 var db = firebase.database();
 var user = null;
 var ref = null;
-var google = new firebase.auth.GoogleAuthProvider(); //구글에 로그인할 수 있는 객체
+var key = null;
+var google = new firebase.auth.GoogleAuthProvider();
 var facebook = new firebase.auth.FacebookAuthProvider();
 
 /****************사용자함수***************/
@@ -14,37 +15,102 @@ function dbInit() {
 }
 
 /****************이벤트콜백***************/ 
+var timeout;
+function onCheck(el, chk) {
+	 $(el).siblings('i').addClass('active');
+	 $(el).removeClass('active');
+	 if(chk) {
+		 timeout =setTimeout(function(){
+		$(el).parent().css('opacity', 0);
+		setTimeout(function(){
+			db.ref('root/todo'+user.uid+'/'+$(el).parent().attr('id')).update(data);
+		}, 750);
+	}, 3000);
+}
+		else {
+			 clearTimeout(timeout);
+			}
+}
+
+function onDoneClick() {
+	$('.bt-done').toggleClass('active');
+	var ref = db.ref('root/todo/'+user.uid);
+	if($('.bt-done').hasClass('active')){  //감추기
+			ref.orderByChild('checked').equalTo(false).once('value').then(onGetData);
+	}
+	else { //보이기
+			reg.once('value').then(onGetData);
+	}
+}
+
+function onGetData(r) {
+	$('.list-wrap').empty();
+	r.forEach(function(v){
+		if(v.val().checked) addHTML(v.key, v.val());
+	});
+	r.forEach(function(v){
+		if(!v.val().checked) addHTML(v.key, v.val());
+	});
+}
+
+function onSubmit(f) {
+	console.log(f.task.value);
+	var data = {
+		 task: f.task.value,
+		 createdAt: new Date().getTime(), //작성인: 현재 날짜 저장
+		 checked: false,
+		
+	}
+	if(f.task.value !== '') db.ref('root/todo/'+user.uid).push(data);
+	return false;
+}
+
 function onAdd(r) {
-	console.log(r.val());
+	//console.log(r.key); //key 는 고유 아이디
+	//console.log(r.val()); //val 은 데이터
+	if(!r.val().checked) {
+		var html = '<li id="'+r.key+'">';
+		html += '	<i class="active far fa-circle"  onclick="onCheck(this, true);"></i>';
+		html += '	<i class="far fa-check-circle"  onclick="onCheck(this, false);"></i>';
+		html += '	<span>'+r.val().task+'</span>';
+		html += '</li>';
+		var $li = $(html).prependTo($(".list-wrap"));
+		$li.css("opacity");
+		$li.css("opacity", 1);
+
+	}
+
+//$(".add-wrap")[0].reset(); //reset 이라는 함수는 폼을 초기화하는함순데 자바스크립트 함수다
+//제이쿼리의 [0]데이터가 자바스크립트 객체다.
+document.querySelector(".add-wrap").reset();
 }
 
 function onRev(r) {
-	console.log(r.val());
+
 }
 
 function onChg(r) {
-	console.log(r.val());
+		$('#'+r.key).remove();
 }
 
 
 
 
 function onAuthChg(r) {
+	user = r;
   if(r) {// if(r) <- 로그인되었다면..
     console.log(r);
-		user = r;
 		$('.sign-wrap .icon img').attr('src', user.photoURL);
 		$('.sign-wrap .email').html(user.email);
 		$('.modal-wrapper.auth-wrapper').hide();
-    $('#btLogout').show();
+		$('.sign-wrap').show();
     dbInit();
 	} 
   else { //로그아웃되었다면..
-		user = null;
 		$('.sign-wrap .icon img').attr('src', 'https://via.placeholder.com/36'); // 로그아웃일때 빈 더미 이미지 가져와
 		$('.sign-wrap .email').html('');
 		$('.modal-wrapper.auth-wrapper').show();
-		$('#btLogout').hide();
+		$('.sign-wrap').hide();
 	}
 }
 

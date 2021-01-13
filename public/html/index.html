@@ -9,14 +9,14 @@
 	<link rel="stylesheet" href="../css/reset.css">
 	<link rel="stylesheet" href="../css/animate3.min.css">
 	<link rel="stylesheet" href="../css/index.css">
-	<script defer src="/__/firebase/8.2.2/firebase-app.js"></script>
-	<script defer src="/__/firebase/8.2.2/firebase-auth.js"></script>
-	<script defer src="/__/firebase/8.2.2/firebase-database.js"></script>
-	<script defer src="/__/firebase/8.2.2/firebase-storage.js"></script>
-	<script defer src="/__/firebase/8.2.2/firebase-analytics.js"></script>
-	<script defer src="/__/firebase/init.js?useEmulator=true"></script>
-	<script defer src="../js/jquery-3.5.1.min.js"></script>
-	<script defer src="../js/index.js"></script>
+	<script src="/__/firebase/8.2.2/firebase-app.js"></script>
+	<script src="/__/firebase/8.2.2/firebase-auth.js"></script>
+	<script src="/__/firebase/8.2.2/firebase-database.js"></script>
+	<script src="/__/firebase/8.2.2/firebase-storage.js"></script>
+	<script src="/__/firebase/8.2.2/firebase-analytics.js"></script>
+	<script src="/__/firebase/init.js?useEmulator=true"></script>
+	<script src="../js/jquery-3.5.1.min.js"></script>
+	<script src="../js/moment-with-locales.min.js"></script>
 </head>
 <body>
 	<header class="header-wrapper">
@@ -28,41 +28,47 @@
 				<img src="https://via.placeholder.com/36" alt="아이콘" class="mw-100">
 			</div> <!-- 로그인 프로필 이미지 -->
 			<div class="email"></div> <!-- 본인 이메일 -->
-			<button class="btn btn-danger" id="btLogout">
+			<button class="btn btn" id="btLogout">
 				<i class="fa fa-sign-out-alt"></i>
 			</button>
 		</div>
   </header>
   
   <div class="content-wrapper">
-      <div class="list-wrapper">
-        <div class="add-wrap">
-					<i class="fa fa-plus"></i>
-              <input type="text" id="task" class="form-control" autofocus>
-        </div>
-        <ul class="list-wrap">
-            <li>
-                <i class="active far fa-circle"></i>
-                <i class="far fa-check-circle"></i>
-                <span>우유/고기 사기</span>
-            </li>
-        </ul>
-      </div>
-       <div class="edit-wrapper">
-            <textarea id="content" class="form-control">
-
-            </textarea>
-       </div>
+		<div class="list-wrapper">
+			<form class="add-wrap" onsubmit="return onSubmit(this);"><!-- true,false 를 주고 전송하거나 전송하지 않는다인데, 함수를 만들어 넣어서 함수의 상황에 따라 실행되게.-->
+				<button type="submit"><i class="fa fa-plus"></i></button> 
+				<input type="text" name="task" class="form-control" onkeyup="onKeyup(this);" autofocus>
+			</form><!-- form 안에 있는 버튼은 기본적으로 type="submit"을 가진다. -->
+			<div class="text-right"><!-- 오른쪽 정렬 되는거. -->
+				<a href="javascript: onDoneClick()" class="bt-done active">완료된 항목 </a>
+			</div>
+			<ul class="list-wrap">
+				
+			</ul>
+		</div>
+		<div class="edit-wrapper">
+			<form onsubmit="return onEdit(this)">
+				<input type="hidden" name="key" value="">
+				<input type="text" name="task" class="form-control" placeholder="할일을 입력하세요">
+				<textarea name="comment" class="form-control" placeholder="내용을 입력하세요"></textarea>
+				<input type="file" name="upfile" class="form-control-file">
+				<hr>
+				<button class="btn btn-success mx-auto d-none">수정</button>
+				<button class="btn btn-primary mx-auto">새로운 할일 저장</button>
+				<button type="reset" class="btn btn-warning mx-auto" 
+				onclick="onReset(this.form)">취소</button>
+			</form>
+		</div>
   </div>
-
-	<div class="list-wrapper">
-
-	</div>
-
+	
+	
 	<div class="auth-wrapper modal-wrapper">
 		<button class="btn btn-danger" id="btGoogleLogin">
 			<i class="fab fa-google mr-2"></i> Google 로그인
 		</button><!-- mr-2 는 0.5em / mr-3 은 1em -->
 	</div>
+
+	<script src="../js/index.js"></script>
 </body>
 </html>

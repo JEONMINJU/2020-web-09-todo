@@ -21,24 +21,24 @@
 <body>
 	<header class="header-wrapper">
 		<h1 class="title-wrap">
-			<i class="fa fa-tasks"></i> TODO APP
+			<i class="fa fa-tasks"></i> TODO App
 		</h1>
 		<div class="sign-wrap">
-			<div class="icon">
+			<div class="icon"> <!-- 로그인 프로필 이미지 -->
 				<img src="https://via.placeholder.com/36" alt="아이콘" class="mw-100">
-			</div> <!-- 로그인 프로필 이미지 -->
-			<div class="email"></div> <!-- 본인 이메일 -->
+			</div>
+			<div class="email"></div>
 			<button class="btn btn" id="btLogout">
 				<i class="fa fa-sign-out-alt"></i>
 			</button>
 		</div>
-  </header>
-  
-  <div class="content-wrapper">
+	</header>
+	<div class="content-wrapper">
 		<div class="list-wrapper">
-			<form class="add-wrap" onsubmit="return onSubmit(this);"><!-- true,false 를 주고 전송하거나 전송하지 않는다인데, 함수를 만들어 넣어서 함수의 상황에 따라 실행되게.-->
-				<button type="submit"><i class="fa fa-plus"></i></button> 
-				<input type="text" name="task" class="form-control" onkeyup="onKeyup(this);" autofocus>
+			<form class="add-wrap" onsubmit="return onSubmit(this);">
+				<button type="submit"><i class="fa fa-plus"></i></button>
+				<button type="submit" class="bt-under"><i class="fa fa-plus"></i></button>
+				<input type="text" name="task" class="form-control" onkeyup="onKeyup(this);" autofocus><!-- true,false 를 주고 전송하거나 전송하지 않는다인데, 함수를 만들어 넣어서 함수의 상황에 따라 실행되게.-->
 			</form><!-- form 안에 있는 버튼은 기본적으로 type="submit"을 가진다. -->
 			<div class="text-right"><!-- 오른쪽 정렬 되는거. -->
 				<a href="javascript: onDoneClick()" class="bt-done active">완료된 항목 </a>
@@ -46,12 +46,22 @@
 			<ul class="list-wrap">
 				
 			</ul>
+
+			<div class="bt-close active"></div>
 		</div>
+
 		<div class="edit-wrapper">
-			<form onsubmit="return onEdit(this)">
+<!--    <h2>Calender</h2> -->
+
+			<form onsubmit="return onEdit(this);">
 				<input type="hidden" name="key" value="">
 				<input type="text" name="task" class="form-control" placeholder="할일을 입력하세요">
 				<textarea name="comment" class="form-control" placeholder="내용을 입력하세요"></textarea>
+				<div class="file-wrap">
+					<img src="//via.placeholder.com/60" alt="첨부이미지" class="image active" onclick="onViewImg(this);">
+					<a href="#" class="pds">파일명.jpg</a>
+					<i class="fa fa-times bt-delete" onclick="onFileDelete(this);"></i>
+				</div>
 				<input type="file" name="upfile" class="form-control-file">
 				<hr>
 				<button class="btn btn-success mx-auto d-none">수정</button>
@@ -60,13 +70,19 @@
 				onclick="onReset(this.form)">취소</button>
 			</form>
 		</div>
-  </div>
-	
-	
+	</div>
+
+<!-- modal -->
 	<div class="auth-wrapper modal-wrapper">
 		<button class="btn btn-danger" id="btGoogleLogin">
 			<i class="fab fa-google mr-2"></i> Google 로그인
-		</button><!-- mr-2 는 0.5em / mr-3 은 1em -->
+		</button>
+	</div>
+
+	<div class="img-wrapper modal-wrapper">
+		<div class="mw-75">
+			<img src="" alt="이미지" class="mw-100">
+		</div>
 	</div>
 
 	<script src="../js/index.js"></script>

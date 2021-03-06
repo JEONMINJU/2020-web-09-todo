@@ -234,13 +234,14 @@ function onGetData(r) {
 	});
 }
 
+//인풋 버튼 누르면 제출되는 애(onSubmit이 실행됨)
 function onSubmit(f) {
 	var data = {
-		task: f.task.value,
-		createdAt: new Date().getTime(),
+		task: f.task.value, //enter 를 치면 task 저장하기
+		createdAt: new Date().getTime(),//작성된 날짜
 		checked: false,
 	}
-	if(f.task.value !== '') db.ref('root/todo/'+user.uid).push(data);
+	if(f.task.value !== '') db.ref('root/todo/'+user.uid).push(data);//f.task.value가 빈값이 아니면 내 방에 데이터 푸쉬
 	return false;
 }
 
@@ -251,16 +252,16 @@ function onAdd(r) {
 }
 
 function onAuthChg(r) {
-	user = r;
+	user = r; //user 변수를 만들어서 r값을 넣음. 다른데서 써먹을려고
 	if(r) {
 		$('.sign-wrap .icon img').attr('src', user.photoURL);
 		$('.sign-wrap .email').html(user.email);
-		$('.modal-wrapper.auth-wrapper').hide();
-		$('.sign-wrap').show();
-		dbInit();
+		$('.modal-wrapper.auth-wrapper').hide();//로그인되면 hide
+		$('.sign-wrap').show();//로그인창 쇼
+		dbInit();// 로그인되면 데이터베이스 실행
 	}
 	else {
-		$('.sign-wrap .icon img').attr('src', 'https://via.placeholder.com/36');
+		$('.sign-wrap .icon img').attr('src', 'https://via.placeholder.com/36'); //로그인이 아닐때 더미이미지
 		$('.sign-wrap .email').html('');
 		$('.modal-wrapper.auth-wrapper').show();
 		$('.sign-wrap').hide();

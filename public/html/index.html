@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>TODO APP</title>
+	<title>Manage Scheduler</title>
 	<link rel="stylesheet" href="../css/all.min.css">
 	<link rel="stylesheet" href="../css/bootstrap.min.css">
 	<link rel="stylesheet" href="../css/reset.css">
@@ -20,9 +20,10 @@
 </head>
 <body>
 	<header class="header-wrapper">
-		<h1 class="title-wrap">
-			<i class="fa fa-tasks"></i> TODO App
-		</h1>
+		<div class="title-wrap" style="display: flex; flex-wrap: wrap;">
+			<span class="title" ><i class="fa fa-calendar-check ml-2" style="font-size: 0.875em;">&nbsp; Manage Scheduler</i></span>
+			<span class="comment" style="font-size: 0.65em; padding: 0.4em 0 0 1em; color: #c5c5c5; line-height: 1.3; ">⌞ Check all your work and schedules here ! ⌝</span>
+		</div>
 		<div class="sign-wrap">
 			<div class="icon"> <!-- 로그인 프로필 이미지 -->
 				<img src="https://via.placeholder.com/36" alt="아이콘" class="mw-100">
@@ -51,11 +52,10 @@
 		</div>
 
 		<div class="edit-wrapper">
-<!--    <h2>Calender</h2> -->
 
 			<form onsubmit="return onEdit(this);">
 				<input type="hidden" name="key" value="">
-				<input type="text" name="task" class="form-control" placeholder="할일을 입력하세요">
+				<input type="text" name="task" class="form-control" placeholder="스케줄을 입력하세요">
 				<textarea name="comment" class="form-control" placeholder="내용을 입력하세요"></textarea>
 				<div class="file-wrap">
 					<img src="//via.placeholder.com/60" alt="첨부이미지" class="image active" onclick="onViewImg(this);">
@@ -64,10 +64,10 @@
 				</div>
 				<input type="file" name="upfile" class="form-control-file">
 				<hr>
-				<button class="btn btn-success mx-auto d-none">수정</button>
-				<button class="btn btn-primary mx-auto">새로운 할일 저장</button>
+				<button class="btn btn-success mx-auto d-none">Change</button>
+				<button class="btn btn-primary mx-auto">Save New</button>
 				<button type="reset" class="btn btn-warning mx-auto" 
-				onclick="onReset(this.form)">취소</button>
+				onclick="onReset(this.form)">Cancel</button>
 			</form>
 		</div>
 	</div>
